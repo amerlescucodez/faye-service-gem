@@ -46,13 +46,6 @@ module FayeService
     FayeService.config["faye_service"]["auth_service"]
   end #/def
 
-  # Reads the YAML config file and extracts the faye_service->return response definition
-  # => If "yes" then return true
-  # => If "no" or nil then return fals
-  def FayeService.return_http_response?
-    (FayeService.config["faye_service"]["return_response"] == "yes") ? true : false
-  end #/def
-
   # alias of FayeService::Publisher.publish inside lib/faye_service/publisher.rb
   def FayeService.publish(channel, message)
     FayeService::Publisher.publish(channel, message)

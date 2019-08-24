@@ -31,17 +31,7 @@ module FayeService
 					}
 					uri = URI.parse(FayeService::url)
 					http_result = Net::HTTP.post_form(uri, :message => message.to_json)
-					
-					# Was the POST successful?
-					if FayeService.return_http_response?
-						if [Net::HTTPSuccess, Net::HTTPRedirection].include?(http_result)
-							return http_result.body
-						else
-							return "Bad Request%"
-						end #/if-else
-					else
-						return true
-					end #/if-else
+					return http_result.body
 				end #/if
 			end #/def
 		end #/class

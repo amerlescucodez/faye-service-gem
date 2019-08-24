@@ -7,6 +7,7 @@ This gem can extend a Ruby project such as Rails, Sinatra, Padrino, Rack, etc. I
 > You need to have at least one instance of Faye running locally on your machine. If you do not have an instance of Faye to connect to, consider using this docker container and this Github repo: 
 
 **Github Repo**: https://github.com/amerlescucodez/faye-docker
+
 **Docker Container**: https://cloud.docker.com/repository/registry-1.docker.io/amerlescucodez/docker-faye-redis
 
 > You can use this `docker-compose.yaml` template to get the necessary requirements running locally: 
@@ -70,9 +71,9 @@ Edit `config/faye_service.yml` to:
 
 ```yaml
 faye_service: 
-	url: http://localhost:4242/faye
-	auth_token: YOUR_TOKEN
-	auth_service: YOUR TOKEN
+  url: http://localhost:4242/faye
+  auth_token: YOUR_TOKEN
+  auth_service: YOUR TOKEN
 ```
 
 > Make sure the dependency is being loaded on application boot:
