@@ -1,5 +1,7 @@
 # Faye Service Gem
 
+[![Gem Version](https://badge.fury.io/rb/faye_service.svg)](https://badge.fury.io/rb/faye_service)
+
 This gem can extend a Ruby project such as Rails, Sinatra, Padrino, Rack, etc. It provides a simple way to communicate with any Faye server instance. 
 
 ## Prerequisites
