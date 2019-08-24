@@ -4,6 +4,20 @@
 
 This gem can extend a Ruby project such as Rails, Sinatra, Padrino, Rack, etc. It provides a simple way to communicate with any Faye server instance. 
 
+## To Use This Gem
+
+Add it to your `Gemfile`
+
+```
+gem 'faye_service', '~> 1.0'
+```
+
+Or install it locally on your system: 
+
+```
+gem install faye_service
+```
+
 ## Prerequisites
 
 > You need to have at least one instance of Faye running locally on your machine. If you do not have an instance of Faye to connect to, consider using this docker container and this Github repo: 
