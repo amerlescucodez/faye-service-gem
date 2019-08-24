@@ -54,7 +54,7 @@ module FayeService
   end #/def
 
   # alias of FayeService::Publisher.publish inside lib/faye_service/publisher.rb
-  def publish(channel, message)
+  def FayeService.publish(channel, message)
     FayeService::Publisher.publish(channel, message)
   end #/def
 
