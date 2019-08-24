@@ -1,5 +1,5 @@
 require 'net/http'
-require 'faye_service/faye_service'
+require 'faye_service/publisher'
 require 'faye_service/version'
 
 module FayeService
@@ -57,5 +57,5 @@ module FayeService
   def publish(channel, message)
     FayeService::Publisher.publish(channel, message)
   end #/def
-  
+
 end #/module
