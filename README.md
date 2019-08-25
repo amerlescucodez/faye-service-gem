@@ -41,7 +41,7 @@ services:
       - primary
 
   faye:
-    image: amerlescucodez/docker-faye-redis:1.0.0
+    image: amerlescucodez/docker-faye-redis:latest
     links:
       - redis
     depends_on:
@@ -69,10 +69,12 @@ docker-compose up -d
 
 ## Installation into Rails
 
+**Important Note**: If you wish to use SSL with Faye, please change all occurences of `http://localhost:4242` to `https://localhost:4443` (or to the specified values in your instance of faye.) Please read this documentation about SSL support: https://github.com/amerlescucodez/faye-docker#adding-ssl-certificate
+
 > Open your `Gemfile` and add the following dependency: 
 
 ```ruby
-gem "faye_service", "~> 0.0.1", :git => "git@github.com:amerlescucodez/faye-service-gem.git"
+gem "faye_service", "~> 1.0.0"
 ```
 
 > Create the configuration file: 
@@ -89,7 +91,7 @@ Edit `config/faye_service.yml` to:
 faye_service: 
   url: http://localhost:4242/faye
   auth_token: YOUR_TOKEN
-  auth_service: YOUR TOKEN
+  auth_service: YOUR SERVICE NAME
 ```
 
 > Make sure the dependency is being loaded on application boot:
@@ -133,19 +135,6 @@ class Sample
 			:enemies => %w{Batman Robbin Garfield Snoopy}
 		}
 		FayeService.publish("/channel/name",message)
-	end
-end
-```
-
-`app/controllers/sample_controller.rb`
-
-```ruby
-class SampleController < ApplicationController
-	def index
-		sample = Sample.new
-		sample.call_with_nothing
-		sample.call_with_user_channel(session[:user_id], params[:message])
-		sample.call_with_big_message
 	end
 end
 ```
