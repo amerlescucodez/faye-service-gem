@@ -10,5 +10,5 @@ Gem::Specification.new do |s|
   s.name                         = "faye_service"
   s.require_paths                = ["lib"]
   s.version                      = FayeService::VERSION
-  s.spec.add_runtime_dependency  'logging', , '~> 2.2', '>= 2.2.2'
+  s.add_runtime_dependency  'logging', '~> 2.2', '>= 2.2.2'
 end
