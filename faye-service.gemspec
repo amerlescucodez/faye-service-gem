@@ -1,13 +1,14 @@
 require File.expand_path('../lib/faye_service/version', __FILE__)
 
-Gem::Specification.new do |gem|
-  gem.authors                   = ["Andrei Merlescu"]
-  gem.email                     = ["andrei+github@merlescu.net"]
-  gem.description               = gem.summary = "Simple interface for Faye service messaging."
-  gem.homepage                  = "https://github.com/amerlescucodez/faye-service-gem"
-  gem.license                   = "MIT"
-  gem.files                     = `git ls-files | grep -Ev '^(myapp|examples)'`.split("\n")
-  gem.name                      = "faye_service"
-  gem.require_paths             = ["lib"]
-  gem.version                   = FayeService::VERSION
+Gem::Specification.new do |s|
+  s.authors                      = ["Andrei Merlescu"]
+  s.email                        = ["andrei+github@merlescu.net"]
+  s.description                  = s.summary = "Simple interface for Faye service messaging."
+  s.homepage                     = "https://github.com/amerlescucodez/faye-service-gem"
+  s.license                      = "MIT"
+  s.files                        = `git ls-files | grep -Ev '^(myapp|examples)'`.split("\n")
+  s.name                         = "faye_service"
+  s.require_paths                = ["lib"]
+  s.version                      = FayeService::VERSION
+  s.spec.add_runtime_dependency  'logging', , '~> 2.2', '>= 2.2.2'
 end

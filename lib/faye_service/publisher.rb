@@ -30,8 +30,12 @@ module FayeService
 						}
 					}
 					uri = URI.parse(FayeService::url)
+					FayeService::logger.debug "Sending #{message.length} bytes to #{channel} via #{uri}."
 					http_result = Net::HTTP.post_form(uri, :message => message.to_json)
+					FayeService::logger.debug http_result.to_json
 					return http_result.body
+				else
+					FayeService::logger.warn "Invalid channel name provided: #{channel}"
 				end #/if
 			end #/def
 		end #/class

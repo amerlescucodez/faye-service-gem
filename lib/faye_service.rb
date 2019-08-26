@@ -1,12 +1,16 @@
 require 'net/http'
 require 'faye_service/publisher'
-require 'faye_service/loggable'
 require 'faye_service/version'
+require 'logging'
 
 module FayeService
 
-  extend Loggable
-  option :log_level, default: :info
+  @logger = nil
+
+  # Shortcut to the logger variable
+  def FayeService.logger
+    @logger
+  end #/def
 
   # Shortuct for current working directory
   def FayeService.path
@@ -30,6 +34,9 @@ module FayeService
     else
       raise(StandardError,"No faye_service.yml file inside the config directory.")
     end #/if-else
+
+    @logger = Logging.logger['FayeService']
+    @logger.level = :"#{config["faye_service"]["log_level"]||"warn"}"
   end #/def
 
   # Reads the YAML config file and extracts the faye_service->url definition
