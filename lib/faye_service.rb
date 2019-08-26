@@ -1,8 +1,12 @@
 require 'net/http'
 require 'faye_service/publisher'
+require 'faye_service/loggable'
 require 'faye_service/version'
 
 module FayeService
+
+  extend Loggable
+  option :log_level, default: :info
 
   # Shortuct for current working directory
   def FayeService.path
