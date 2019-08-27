@@ -9,6 +9,10 @@ module FayeService
 
   # Shortcut to the logger variable
   def FayeService.logger
+    if @logger.nil?
+      @logger = Logging.logger['FayeService']
+      @logger.level = :"#{config["faye_service"]["log_level"]||"warn"}"
+    end
     @logger
   end #/def
 
@@ -34,9 +38,6 @@ module FayeService
     else
       raise(StandardError,"No faye_service.yml file inside the config directory.")
     end #/if-else
-
-    @logger = Logging.logger['FayeService']
-    @logger.level = :"#{config["faye_service"]["log_level"]||"warn"}"
   end #/def
 
   # Reads the YAML config file and extracts the faye_service->url definition
