@@ -20,7 +20,7 @@ module FayeService
 			# => Will be parsed into JSON
 			# => Should be less than 10KB in size (no programmed limit)
 			def publish(channel,message)
-				if channel =~ %r{^(/[\w-]{3,32}\/[\w-]{3,32}?(\/[\w-]{3,32})?(\/[\w-]{3,32})?(\/[\w-]{3,32})?(\/[\w-]{3,32})?(\/[\w-]{3,32})?)$}
+				if channel =~ %r{^(/[\w-]{3,32}\/[\w-]{3,32}?(\/[\w-]{3,32})?(\/[\w-]{3,32})?(\/[\w-]{3,32})?(\/[\w-]{3,32})?(\/[\w-]{3,32})?)$} || channel =~ %r{^([\w-]{3,32}[\w-]{3,32}?([\w-]{3,32})?([\w-]{3,32})?([\w-]{3,32})?([\w-]{3,32})?([\w-]{3,32})?)$}
 					payload = {
 						:channel => channel,
 						:data => message,
