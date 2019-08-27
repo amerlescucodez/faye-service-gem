@@ -20,9 +20,8 @@ module FayeService
 			# => Will be parsed into JSON
 			# => Should be less than 10KB in size (no programmed limit)
 			def publish(channel,message)
-				logger = FayeService::logger
 				if channel =~ %r{^(/[\w-]{3,32}\/[\w-]{3,32}?(\/[\w-]{3,32})?(\/[\w-]{3,32})?(\/[\w-]{3,32})?(\/[\w-]{3,32})?(\/[\w-]{3,32})?)$}
-					message = {
+					payload = {
 						:channel => channel,
 						:data => message,
 						:ext => {
@@ -31,12 +30,22 @@ module FayeService
 						}
 					}
 					uri = URI.parse(FayeService::url)
-					logger.debug "Sending #{message.length} bytes to #{channel} via #{uri}."
-					http_result = Net::HTTP.post_form(uri, :message => message.to_json)
-					logger.debug http_result.to_json
-					return http_result.body
+					http_result = Net::HTTP.post_form(uri, :message => payload.to_json)
+					return {
+						success: true,
+						uri: uri,
+						channel: channel,
+						data: message,
+						info: "Sending #{payload.length} bytes to #{channel} via #{uri}.",
+						http_response: http_result
+					}
 				else
-					logger.warn "Invalid channel name provided: #{channel}"
+					return {
+						success: false,
+						channel: channel,
+						data: message,
+						error: "Invalid channel name provided: #{channel}"
+					}
 				end #/if
 			end #/def
 		end #/class
