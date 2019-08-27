@@ -12,6 +12,11 @@ module FayeService
 			#    /parent/child1/child2/child3/child4
 			#    /parent/child1/child2/child3/child4/child5
 			#    /parent/child1/child2/child3/child4/child5/child6
+			#    identifier-identifier-identifier
+			#    identifier-identifier-identifier-identifier
+			#    identifier-identifier-identifier-identifier-identifier
+			#    identifier-identifier-identifier-identifier-identifier-identifier
+			#    identifier-identifier-identifier-identifier-identifier-identifier-identifier
 			# => Channels can only go 6 children deep
 			# => Channels must be between 3 and 32 characters in length
 			# => Channels can only contain abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUBWXYV0123456789-
