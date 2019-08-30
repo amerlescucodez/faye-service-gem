@@ -1,4 +1,5 @@
 require 'net/http'
+require 'json'
 module FayeService
 	class Publisher
 		class << self
@@ -37,15 +38,25 @@ module FayeService
 							:auth_service => FayeService.config.auth_service
 						}
 					}
+					headers = {
+						"Origin": FayeService.config.origin
+					}
 					uri = URI.parse(FayeService.config.url)
-					http_result = Net::HTTP.post_form(uri, :message => payload.to_json)
+					response = nil
+					Net::HTTP.start(uri.host, uri.port, use_ssl: FayeService.config.use_ssl) do |http|
+						req = Net::HTTP::Post.new(uri)
+						req['Content-Type'] = 'application/json'
+						req['Referrer'] = FayeService.config.origin
+						req.body = payload.to_json
+						response = http.request(req)
+					end #/block
 					return {
 						success: true,
-						uri: uri,
+						uri: uri.to_json,
 						channel: channel,
 						data: message,
-						info: "Sending #{payload.length} bytes to #{channel} via #{uri}.",
-						http_response: http_result
+						info: "Sending message to #{channel} via #{uri}.",
+						response: response
 					}
 				else
 					return {
