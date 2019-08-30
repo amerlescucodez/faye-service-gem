@@ -27,7 +27,7 @@ module FayeService
 			# => Should be less than 10KB in size (no programmed limit)
 			
 			def publish(channel, message)
-				@logger.debug "Attempting to send #{message.length} bytes to #{channel}."
+				FayeService.logger.debug "Attempting to send #{message.length} bytes to #{channel}."
 				if channel =~ %r{^(/[\w-]{3,32}\/[\w-]{3,32}?(\/[\w-]{3,32})?(\/[\w-]{3,32})?(\/[\w-]{3,32})?(\/[\w-]{3,32})?(\/[\w-]{3,32})?)$} || channel =~ %r{^([\w-]{3,32}[\w-]{3,32}?([\w-]{3,32})?([\w-]{3,32})?([\w-]{3,32})?([\w-]{3,32})?([\w-]{3,32})?)$}
 					payload = {
 						:channel => channel,
