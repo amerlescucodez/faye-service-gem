@@ -9,7 +9,7 @@ This gem can extend a Ruby project such as Rails, Sinatra, Padrino, Rack, etc. I
 Add it to your `Gemfile`
 
 ```
-gem 'faye_service', '~> 1.0'
+gem 'faye_service', '~> 1.0.1'
 ```
 
 Or install it locally on your system: 
@@ -77,29 +77,20 @@ docker-compose up -d
 gem "faye_service", "~> 1.0.0"
 ```
 
-> Create the configuration file: 
+> Create the faye configuration file:
 
-Command Line: 
-
-```ruby
-touch config/faye_service.yml
-```
-
-Edit `config/faye_service.yml` to: 
-
-```yaml
-faye_service: 
-  url: http://localhost:4242/faye
-  auth_token: YOUR_TOKEN
-  auth_service: YOUR SERVICE NAME
-```
-
-> Make sure the dependency is being loaded on application boot:
-
-Edit `config/application.rb`:
+Edit `config/initializers/faye.rb`:
 
 ```ruby
 require 'faye_service'
+
+faye = FayeService.new
+faye.config = {
+  url: "http://localhost:3000", 
+  auth_token: "your_secret_auth_token", 
+  auth_service: Rails.application.class.parent_name, 
+  log_level: :warn
+}
 ```
 
 ## Sending Messages 
