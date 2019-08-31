@@ -24,7 +24,11 @@ gem install faye_service
 
 **Github Repo**: https://github.com/amerlescucodez/faye-docker
 
-**Docker Container**: https://cloud.docker.com/repository/registry-1.docker.io/amerlescucodez/docker-faye-redis
+**Docker Container**: https://hub.docker.com/r/amerlescucodez/docker-faye-ruby
+
+```
+docker pull amerlescucodez/docker-faye-ruby
+```
 
 > You can use this `docker-compose.yaml` template to get the necessary requirements running locally: 
 
@@ -46,11 +50,18 @@ services:
       - redis
     depends_on:
       - redis
-    restart: always
+    restart: unless-stopped
     ports:
       - 4242:4242
+      - 4443:4443
+    expose:
+      - 4242
+      - 4443
     env_file:
       - .faye.env.development
+    volumes:
+      - ./host/path/to/ssl/certificates:/etc/ssl/certs/faye
+      - ./host/path/to/faye/tokens:/usr/local/faye/tokens
     networks:
       - primary
 
@@ -67,14 +78,16 @@ docker-compose up -d
 
 > And then be able to access https://localhost:4242/faye/client.js
 
+**Note**: If you're placing Faye inside a docker-compose file that also includes your application, you need to make sure that 
+
 ## Installation into Rails
 
-**Important Note**: If you wish to use SSL with Faye, please change all occurences of `http://localhost:4242` to `https://localhost:4443` (or to the specified values in your instance of faye.) Please read this documentation about SSL support: https://github.com/amerlescucodez/faye-docker#adding-ssl-certificate
+**Important Note**: If you wish to use SSL with Faye, please change all occurences of `http://localhost:4242` to `https://localhost:4443` (or to the specified values in your instance of faye.) Please read this documentation about SSL support: https://github.com/amerlescucodez/faye-docker-ruby#generate-ssl-certificate
 
 > Open your `Gemfile` and add the following dependency: 
 
 ```ruby
-gem "faye_service", "~> 1.0.0"
+gem "faye_service", "~> 1.0.1"
 ```
 
 > Create the faye configuration file:
@@ -83,14 +96,11 @@ Edit `config/initializers/faye.rb`:
 
 ```ruby
 require 'faye_service'
-
-faye = FayeService.new
-faye.config = {
-  url: "http://localhost:3000", 
-  auth_token: "your_secret_auth_token", 
-  auth_service: Rails.application.class.parent_name, 
-  log_level: :warn
-}
+FayeService.configure do |config|
+  config.url = "http://localhost:4242"
+  config.auth_token = ""
+  config.auth_service = ""
+end
 ```
 
 ## Sending Messages 
@@ -162,8 +172,13 @@ end
 <script type="text/javascript">
   $(function() {
     var faye = new Faye.Client('http://localhost:4242/faye');
-    faye.subscribe("/my/awesome/channel", function(data) {
+    varsubscription = faye.subscribe("/my/awesome/channel", function(data) {
       alert(data); 
+    });
+    subscription.then(function(message){
+      console.log("Successfully subscribed to Faye.");
+    }, function(error){
+      console.log("Error connecting to Faye.");
     });
   });
 </script>
